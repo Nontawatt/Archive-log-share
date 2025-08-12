@@ -1,0 +1,10 @@
+[Unit]
+Description=SIEM → Google Drive backup job
+After=network-online.target rclone-mount.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=/mnt/data/siem-gdrive-archiver/config.env
+ExecStart=/usr/bin/env bash -c '/usr/local/bin/siem-gdrive-backup'
+Nice=10

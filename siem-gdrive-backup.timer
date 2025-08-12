@@ -1,0 +1,10 @@
+[Unit]
+Description=Schedule for SIEM → Google Drive backup
+
+[Timer]
+OnCalendar=*-*-* 01:10:00
+Persistent=true
+Unit=siem-gdrive-backup.service
+
+[Install]
+WantedBy=timers.target
