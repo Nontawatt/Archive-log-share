@@ -1,83 +1,82 @@
-# Archive-log-share
-Feature หลัก
-1. Automated Splunk Log Export
-ดึงข้อมูลจาก Splunk CLI ตาม SPL Query ที่ผู้ใช้กำหนด
+Key Features
+1. Automated SIEM Log Export
+Extracts data directly from SIEM CLI using user-defined SPL Queries.
 
-รองรับการ Export เป็น CSV หรือ JSON
+Supports export in CSV or JSON format.
 
-ใช้ Scheduled Search ใน Splunk หรือให้ script รัน query เองผ่าน CLI
+Can pull logs for specific time ranges (daily, weekly, monthly, or custom periods).
 
-ดึงข้อมูลช่วงเวลาที่กำหนดได้ เช่น รายวัน, รายสัปดาห์, รายเดือน
+Works with Scheduled Searches in SIEM or runs ad-hoc queries via CLI.
 
 2. Compression & Encryption
-รองรับการบีบอัดไฟล์ด้วย gzip เพื่อลดขนาด
+Supports file compression with gzip to reduce storage size.
 
-รองรับการเข้ารหัสไฟล์ด้วย GPG Public Key (เพื่อส่งไฟล์ไปเก็บแบบปลอดภัย)
+Optional encryption with GPG Public Key for secure archival.
 
-สร้าง SHA256 Checksum อัตโนมัติ เพื่อให้ตรวจสอบความถูกต้องของไฟล์ได้
+Automatically generates SHA256 checksums to ensure file integrity.
 
 3. Google Drive Integration
-Mount Google Drive เป็น Local Disk ด้วย rclone mount (ทำงานเหมือนโฟลเดอร์ปกติ)
+Mount Google Drive as a local folder using rclone mount for direct file operations.
 
-หรือเลือกโหมด Direct Upload ด้วย rclone copy โดยไม่ต้อง mount
+Or choose Direct Upload mode via rclone copy without mounting.
 
-กำหนดโฟลเดอร์ปลายทางใน Google Drive ได้ เช่น splunk-archive/YYYY/MM/
+Customizable folder structure in Google Drive (e.g., SIEM-archive/YYYY/MM/).
 
 4. Retention Management
-ตั้งค่า Retention Policy (ลบไฟล์ที่เก่ากว่ากี่วัน)
+Configurable Retention Policy to automatically delete files older than a specified number of days.
 
-ระบบลบไฟล์เก่าอัตโนมัติใน Google Drive (เมื่อใช้โหมด mount)
+Automatic cleanup of old logs on Google Drive (when using mount mode).
 
 5. Fully Automated Scheduling
-ใช้ systemd timer เพื่อรันงานอัตโนมัติตามเวลาที่ตั้ง เช่น ทุกวัน 01:10
+Uses systemd timers to run jobs automatically at scheduled times (default: daily at 01:10).
 
-ป้องกันการรันซ้ำด้วย Lockfile
+Prevents duplicate runs with lockfile mechanism.
 
-ทำงานแม้ระบบ reboot เพราะ systemd จะ resume ได้
+Persistent scheduling — continues running after system reboots.
 
 6. Flexible Configuration
-ค่าทั้งหมดอยู่ใน ไฟล์ config.env แก้ไขได้ง่าย
+All settings are stored in a single config.env file for easy editing.
 
-ตั้งค่าพารามิเตอร์ได้ เช่น:
+Configurable parameters include:
 
-ที่อยู่ Splunk CLI
+SIEM CLI path
 
-วิธี Auth (Token / Username+Password)
+Authentication method (Token or Username/Password)
 
-SPL Query
+SPL Query for log selection
 
-รูปแบบ Export (csv/json)
+Export format (csv / json)
 
-โหมดอัปโหลด (mount หรือ rclone_copy)
+Upload mode (mount or rclone_copy)
 
-การบีบอัดและเข้ารหัส
+Compression and encryption options
 
 Retention days
 
-เวลา backup
+Backup schedule
 
 7. Security-Oriented
-รองรับการใช้ Splunk Token แทนรหัสผ่าน เพื่อลดความเสี่ยง
+Supports Splunk Token authentication to avoid storing plaintext passwords.
 
-สามารถจำกัดสิทธิ์ไฟล์ config.env (chmod 600)
+Allows file permission restrictions (chmod 600) for sensitive configs.
 
-รองรับการเข้ารหัส GPG ก่อนส่งขึ้น Cloud
+GPG encryption ensures secure transfer and storage of logs.
 
-8. Minimal Dependency
-ใช้เพียง bash, rclone, gzip, และ (ถ้าต้องการ) gpg
+8. Minimal Dependencies
+Requires only bash, rclone, gzip, and optionally gpg.
 
-ไม่ต้องมีโปรแกรมเมอร์มาดูแล — script พร้อมใช้
+No complex coding required — ready-to-use scripts.
 
 9. Logging & Monitoring
-ใช้ journalctl ดู log การทำงานย้อนหลังได้
+View detailed execution logs via journalctl.
 
-แจ้ง error ใน console/systemd log เมื่อ export หรือ upload ล้มเหลว
+Error handling with logging to systemd logs.
 
-เหมาะกับการนำไปต่อยอดแจ้งเตือนผ่าน Email, Slack, LINE Notify (soon)
+Easily extendable for alerts via Email, Slack, or LINE Notify.
 
 10. Cross-Environment Ready
-ออกแบบให้ติดตั้งได้บน Linux Server ทั่วไป (Debian, Ubuntu, CentOS)
+Designed for Linux servers (Debian, Ubuntu, CentOS).
 
-สามารถต่อยอดทำเป็น Docker container ได้ง่าย
+Easily adaptable to Docker environments.
 
-ดัดแปลงให้รันบน Windows ผ่าน PowerShell + Task Scheduler ได้
+Can be modified to run on Windows using PowerShell + Task Scheduler.
