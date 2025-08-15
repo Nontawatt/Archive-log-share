@@ -2,9 +2,7 @@
 
 โปรแกรมสำเร็จรูปสำหรับ Export/Archive/Backup **log จาก SIEM ใด ๆ** ไปเก็บระยะยาวบน Google Drive  
 รองรับทั้ง **mount โฟลเดอร์ (rclone mount)** หรือ **อัปโหลดตรง (rclone copy)**  
-License: **Apache-2.0**
-
-> โครงการนี้เป็นเวอร์ชันที่ปรับคำทั้งหมดจาก "Splunk" ให้เป็นคำกลาง "SIEM" และทำให้ส่วน export เป็น **Generic** ผ่านคำสั่งที่กำหนดใน `config.env`
+License: Apache-2.0
 
 ## คุณสมบัติ
 - Export จาก **SIEM** ด้วยคำสั่งที่ผู้ใช้กำหนดเอง (`SIEM_EXPORT_CMD`)
